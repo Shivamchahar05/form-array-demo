@@ -1,0 +1,41 @@
+<h1 class="from-left1">Nested Form Group & Form Array Example</h1>
+<div class="from-left2">
+
+  <form [formGroup]="formArrayExample" (ngSubmit)="submitHandler()">
+
+    <input placeholder="Enter Business Name" formControlName="businessName" /> <br>
+
+    <!-- START FORMGROUP -->
+    <h3>Fill Onwer Info</h3>
+    <ng-container formGroupName="ownerInfo">
+      <input placeholder="Enter Owner Name" formControlName="name" /> <br>
+      <label>Select Gender</label>
+      <select formControlName="gender">
+        <option value="M">Male</option>
+        <option value="F">Female</option>
+      </select> <br>
+    </ng-container>
+
+    <!-- START FORMARRAY -->
+    <h3>Add Multiple Locations</h3>
+    <ng-contaiiner formArrayName="locations">
+      <ng-container *ngFor="let loc of locations.controls; let locIndex = index" [formGroupName]="locIndex">
+        <input placeholder="Enter Location" formControlName="address" /> <br>
+        <input placeholder="Enter Mobile Number" formControlName="mobile" /> <br>
+        <input placeholder="Enter City" formControlName="city" /> <br>
+        <input placeholder="Enter State" formControlName="state" /> <br>
+        <button type="button" *ngIf="locations['controls'].length > 1" (click)="removeLocations(locIndex)">
+          Remove Location
+        </button>
+        <br>
+      </ng-container>
+      <br><br>
+      <button type="button" (click)="addLocations()">
+        Add More Locations
+      </button>
+      <br><br>
+    </ng-contaiiner>
+    <button type="submit">Submit</button>
+  </form>
+
+</div>
